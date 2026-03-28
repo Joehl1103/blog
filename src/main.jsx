@@ -1,9 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Button } from "@/components/ui/button";
 import "./index.css";
 
 function App() {
-  return <h1 className="text-2xl font-bold p-8">Blog Editor</h1>;
+  return (
+    <div className="p-8">
+      <Button>Test Button</Button>
+    </div>
+  );
 }
 
 createRoot(document.getElementById("root")).render(
