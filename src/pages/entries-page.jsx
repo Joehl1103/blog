@@ -28,7 +28,7 @@ export function EntriesPage() {
   }, [fetchEntries]);
 
   return (
-    <Card className="rounded-[2rem] border-border/70 bg-background/95 shadow-lg shadow-black/5">
+    <Card className="border-border/70 bg-background/95 shadow-lg shadow-black/5">
       <CardHeader className="flex flex-col gap-4 p-8 pb-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-2">
           <CardTitle className="text-3xl font-semibold tracking-tight">
@@ -42,7 +42,7 @@ export function EntriesPage() {
 
         <div className="flex flex-wrap gap-3">
           <Button
-            className="rounded-full"
+            className=""
             onClick={() => void fetchEntries()}
             type="button"
             variant="outline"
@@ -52,13 +52,13 @@ export function EntriesPage() {
           </Button>
 
           {user ? (
-            <Link className={cn(buttonVariants(), "rounded-full")} to="/editor">
+            <Link className={cn(buttonVariants())} to="/editor">
               <PencilLine className="mr-2 size-4" />
               New entry
             </Link>
           ) : (
             <Link
-              className={cn(buttonVariants({ variant: "secondary" }), "rounded-full")}
+              className={cn(buttonVariants({ variant: "secondary" }))}
               to="/login"
             >
               Log in to write
@@ -69,19 +69,19 @@ export function EntriesPage() {
 
       <CardContent className="p-8 pt-2">
         {loading ? (
-          <p className="rounded-2xl border border-dashed border-border px-4 py-12 text-center text-sm text-muted-foreground">
+          <p className="border border-dashed border-border px-4 py-12 text-center text-sm text-muted-foreground">
             Loading entries...
           </p>
         ) : null}
 
         {!loading && error ? (
-          <p className="rounded-2xl border border-destructive/20 bg-destructive/5 px-4 py-4 text-sm text-destructive">
+          <p className="border border-destructive/20 bg-destructive/5 px-4 py-4 text-sm text-destructive">
             {error}
           </p>
         ) : null}
 
         {!loading && !error && entries.length === 0 ? (
-          <p className="rounded-2xl border border-dashed border-border px-4 py-12 text-center text-sm text-muted-foreground">
+          <p className="border border-dashed border-border px-4 py-12 text-center text-sm text-muted-foreground">
             No entries yet.
           </p>
         ) : null}
@@ -93,7 +93,7 @@ export function EntriesPage() {
 
               return (
                 <article
-                  className="flex flex-col gap-4 rounded-[1.5rem] border border-border/70 bg-muted/30 p-5 transition-transform hover:-translate-y-0.5 hover:bg-muted/45 sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-4 border border-border/70 bg-muted/30 p-5 transition-transform hover:-translate-y-0.5 hover:bg-muted/45 sm:flex-row sm:items-center sm:justify-between"
                   key={entry.id}
                 >
                   <div className="space-y-2">
@@ -108,7 +108,7 @@ export function EntriesPage() {
                   <div className="flex flex-wrap gap-3">
                     {isOwner ? (
                       <Link
-                        className={cn(buttonVariants({ variant: "outline" }), "rounded-full")}
+                        className={cn(buttonVariants({ variant: "outline" }))}
                         to={`/editor/${entry.id}`}
                       >
                         Edit
@@ -116,7 +116,7 @@ export function EntriesPage() {
                     ) : null}
 
                     <Link
-                      className={cn(buttonVariants(), "rounded-full")}
+                      className={cn(buttonVariants())}
                       to={`/view/${entry.id}`}
                     >
                       View entry

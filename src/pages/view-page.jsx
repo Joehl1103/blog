@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { CommentSection } from "@/components/comment-section";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { fetchEntry } from "@/hooks/use-entries";
@@ -56,10 +57,10 @@ export function ViewPage() {
   }, [entryId]);
 
   return (
-    <Card className="mx-auto max-w-4xl rounded-[2rem] border-border/70 bg-background/95 shadow-lg shadow-black/5">
+    <Card className="mx-auto max-w-4xl border-border/70 bg-background/95 shadow-lg shadow-black/5">
       <CardHeader className="space-y-5 p-8 pb-0">
         <Link
-          className={cn(buttonVariants({ variant: "outline" }), "w-fit rounded-full")}
+          className={cn(buttonVariants({ variant: "outline" }), "w-fit")}
           to="/entries"
         >
           <ArrowLeft className="mr-2 size-4" />
@@ -86,14 +87,18 @@ export function ViewPage() {
         {loading ? (
           <p className="text-sm text-muted-foreground">Loading entry content...</p>
         ) : errorMessage ? (
-          <p className="rounded-2xl border border-destructive/20 bg-destructive/5 px-4 py-4 text-sm text-destructive">
+          <p className="border border-destructive/20 bg-destructive/5 px-4 py-4 text-sm text-destructive">
             {errorMessage}
           </p>
         ) : (
-          <div
-            className="tiptap-content rounded-[1.5rem] border border-border/70 bg-muted/20"
-            dangerouslySetInnerHTML={{ __html: entry?.content || "<p>No content.</p>" }}
-          />
+          <>
+            <div
+              className="tiptap-content border border-border/70 bg-muted/20"
+              dangerouslySetInnerHTML={{ __html: entry?.content || "<p>No content.</p>" }}
+            />
+
+            <CommentSection entryId={entryId} />
+          </>
         )}
       </CardContent>
     </Card>

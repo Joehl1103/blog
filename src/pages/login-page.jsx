@@ -48,7 +48,7 @@ export function LoginPage() {
 
   return (
     <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-      <section className="rounded-[2rem] border border-border/70 bg-[linear-gradient(135deg,_rgba(16,16,16,0.98),_rgba(52,52,52,0.9))] p-8 text-primary-foreground shadow-xl shadow-black/10 sm:p-10">
+      <section className="border border-border/70 bg-[linear-gradient(135deg,_rgba(16,16,16,0.98),_rgba(52,52,52,0.9))] p-8 text-primary-foreground shadow-xl shadow-black/10 sm:p-10">
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary-foreground/70">
           Welcome Back
         </p>
@@ -62,7 +62,7 @@ export function LoginPage() {
         </p>
       </section>
 
-      <Card className="rounded-[2rem] border-border/70 bg-background/95 shadow-xl shadow-black/5">
+      <Card className="border-border/70 bg-background/95 shadow-xl shadow-black/5">
         <CardHeader className="space-y-3 p-8 pb-4">
           <CardTitle className="text-2xl">
             {isSignUp ? "Create your account" : "Log in to continue"}
@@ -104,18 +104,18 @@ export function LoginPage() {
             </div>
 
             {errorMessage ? (
-              <p className="rounded-2xl border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+              <p className="border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
                 {errorMessage}
               </p>
             ) : null}
 
             {statusMessage ? (
-              <p className="rounded-2xl border border-border bg-muted/60 px-4 py-3 text-sm text-foreground">
+              <p className="border border-border bg-muted/60 px-4 py-3 text-sm text-foreground">
                 {statusMessage}
               </p>
             ) : null}
 
-            <Button className="w-full rounded-full" disabled={isSubmitting} type="submit">
+            <Button className="w-full" disabled={isSubmitting} type="submit">
               {isSubmitting
                 ? "Submitting..."
                 : isSignUp

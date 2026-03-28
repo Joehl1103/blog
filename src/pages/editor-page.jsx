@@ -110,10 +110,10 @@ export function EditorPage() {
   };
 
   return (
-    <Card className="mx-auto max-w-5xl rounded-[2rem] border-border/70 bg-background/95 shadow-lg shadow-black/5">
+    <Card className="mx-auto max-w-5xl border-border/70 bg-background/95 shadow-lg shadow-black/5">
       <CardHeader className="space-y-5 p-8 pb-4">
         <Link
-          className={cn(buttonVariants({ variant: "outline" }), "w-fit rounded-full")}
+          className={cn(buttonVariants({ variant: "outline" }), "w-fit")}
           to="/entries"
         >
           <ArrowLeft className="mr-2 size-4" />
@@ -143,13 +143,13 @@ export function EditorPage() {
           </div>
 
           {errorMessage ? (
-            <p className="rounded-2xl border border-destructive/20 bg-destructive/5 px-4 py-4 text-sm text-destructive">
+            <p className="border border-destructive/20 bg-destructive/5 px-4 py-4 text-sm text-destructive">
               {errorMessage}
             </p>
           ) : null}
 
           {loadingEntry ? (
-            <p className="rounded-2xl border border-dashed border-border px-4 py-12 text-center text-sm text-muted-foreground">
+            <p className="border border-dashed border-border px-4 py-12 text-center text-sm text-muted-foreground">
               Loading entry...
             </p>
           ) : (
@@ -179,7 +179,7 @@ export function EditorPage() {
             public view page.
           </p>
 
-          <Button className="rounded-full" disabled={isSaving || loadingEntry} type="submit">
+          <Button disabled={isSaving || loadingEntry} type="submit">
             <Save className="mr-2 size-4" />
             {isSaving ? "Saving..." : isEditing ? "Update entry" : "Publish entry"}
           </Button>

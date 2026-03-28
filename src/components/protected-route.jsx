@@ -8,7 +8,7 @@ export function ProtectedRoute() {
 
   if (loading) {
     return (
-      <Card className="mx-auto max-w-xl rounded-[1.75rem] border-border/70 bg-background/90 shadow-lg shadow-black/5">
+      <Card className="mx-auto max-w-xl border-border/70 bg-background/90 shadow-lg shadow-black/5">
         <CardContent className="px-6 py-14 text-center text-sm text-muted-foreground">
           Restoring your session...
         </CardContent>

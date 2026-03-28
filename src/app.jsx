@@ -19,6 +19,11 @@ const LoginPage = lazy(() =>
     default: module.LoginPage,
   }))
 );
+const ProfilePage = lazy(() =>
+  import("@/pages/profile-page").then((module) => ({
+    default: module.ProfilePage,
+  }))
+);
 const ViewPage = lazy(() =>
   import("@/pages/view-page").then((module) => ({
     default: module.ViewPage,
@@ -27,7 +32,7 @@ const ViewPage = lazy(() =>
 
 function RouteFallback() {
   return (
-    <Card className="mx-auto max-w-xl rounded-[1.75rem] border-border/70 bg-background/90 shadow-lg shadow-black/5">
+    <Card className="mx-auto max-w-xl border-border/70 bg-background/90 shadow-lg shadow-black/5">
       <CardContent className="px-6 py-14 text-center text-sm text-muted-foreground">
         Loading page...
       </CardContent>
@@ -47,6 +52,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/editor" element={<EditorPage />} />
             <Route path="/editor/:entryId" element={<EditorPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
           <Route path="*" element={<Navigate replace to="/entries" />} />
         </Route>

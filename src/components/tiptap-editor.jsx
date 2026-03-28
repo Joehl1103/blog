@@ -81,12 +81,12 @@ export function TiptapEditor({ disabled = false, onChange, value = "" }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-[1.5rem] border border-border/70 bg-background shadow-sm">
+    <div className="overflow-hidden border border-border/70 bg-background shadow-sm">
       <div className="flex flex-wrap gap-2 border-b border-border/70 bg-muted/40 px-4 py-3">
         {toolbarButtons.map((button) => (
           <Button
             className={cn(
-              "rounded-full px-3",
+              "px-3",
               button.isActive(editor) && "bg-primary text-primary-foreground"
             )}
             disabled={disabled}

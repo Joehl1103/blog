@@ -699,15 +699,6 @@ export function LoginPage() {
         <CardTitle>{isSignUp ? "Sign up" : "Log in"}</CardTitle>
       </CardHeader>
       <CardContent>
-        {/* TODO: Remove before deploy — temporary dev credentials */}
-        <div className="mb-4 rounded-md border border-yellow-300 bg-yellow-50 p-3 text-sm text-muted-foreground">
-          <strong>Demo login:</strong>
-          <br />
-          Email: jkhloomis@icloud.com
-          <br />
-          Password: ABCD1234
-        </div>
-
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
