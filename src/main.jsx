@@ -1,18 +1,16 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Button } from "@/components/ui/button";
+import { HashRouter } from "react-router-dom";
+import App from "@/app";
+import { AuthProvider } from "@/contexts/auth-context";
 import "./index.css";
-
-function App() {
-  return (
-    <div className="p-8">
-      <Button>Test Button</Button>
-    </div>
-  );
-}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <HashRouter>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </HashRouter>
   </StrictMode>
 );

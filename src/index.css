@@ -120,11 +120,55 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
+  }
+
   html {
     @apply font-sans;
-    }
+  }
+
+  body {
+    @apply min-h-screen bg-background text-foreground antialiased;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .tiptap-content {
+    @apply min-h-[420px] w-full px-5 py-4 text-[1.02rem] leading-7 text-foreground focus:outline-none;
+  }
+
+  .tiptap-content h2 {
+    @apply mt-8 text-3xl font-semibold tracking-tight;
+  }
+
+  .tiptap-content h3 {
+    @apply mt-6 text-2xl font-semibold tracking-tight;
+  }
+
+  .tiptap-content p {
+    @apply my-4;
+  }
+
+  .tiptap-content ul {
+    @apply my-4 list-disc pl-6;
+  }
+
+  .tiptap-content ol {
+    @apply my-4 list-decimal pl-6;
+  }
+
+  .tiptap-content li {
+    @apply my-1;
+  }
+
+  .tiptap-content blockquote {
+    @apply my-5 border-l-4 border-border pl-4 italic text-muted-foreground;
+  }
+
+  .tiptap-content strong {
+    @apply font-semibold;
+  }
 }

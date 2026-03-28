@@ -2,14 +2,19 @@
 
 ## Project Overview
 
-A static single-page blog editor backed by Supabase for auth and data storage. No build step — vanilla HTML/CSS/JS served as static files.
+A Vite + React single-page blog editor backed by Supabase for auth and data storage. The app uses hash-based routing so it can still be deployed statically while keeping the editor behind authenticated routes.
 
 ## Key Files
 
-- `index.html` — HTML structure
-- `styles.css` — All styles
-- `app.js` — Routing, auth, CRUD, editor logic
-- `supabase-client.js` — Supabase client init
+- `src/main.jsx` — React mount point with `HashRouter` and `AuthProvider`
+- `src/app.jsx` — Route tree with lazy-loaded pages
+- `src/components/layout.jsx` — Shared shell and navigation
+- `src/components/protected-route.jsx` — Auth gate for editor routes
+- `src/components/tiptap-editor.jsx` — Tiptap editor wrapper
+- `src/pages/` — Login, entries, view, and editor pages
+- `src/contexts/auth-context.jsx` — Supabase auth state and auth actions
+- `src/hooks/use-entries.js` — Entry fetch/create/update logic
+- `src/lib/supabase.js` — Supabase client init
 - `supabase/migrations/` — Database schema migrations
 
 ## Documentation Policy
@@ -33,6 +38,12 @@ This project maintains two separate docs that must stay in sync with the codebas
 
 After making any code change, check whether README.md and/or USAGE.md need updating. If a feature was added or changed, update both. If only internal architecture changed, update README.md only. Do not let docs drift out of sync with the code.
 
+## Development Commands
+
+- `npm install` — install dependencies
+- `npm run dev` — start the Vite development server
+- `npm run build` — build the production bundle
+
 ## Supabase
 
 - Project URL: `https://zmplxklzsjkuipttflnd.supabase.co`
@@ -41,4 +52,5 @@ After making any code change, check whether README.md and/or USAGE.md need updat
 
 ## Projects and Tasks
 
-*(No outstanding tasks)*
+- React migration to Vite/React/shadcn/ui/Tiptap completed on 2026-03-27
+- Keep future work aligned with the React architecture and avoid reintroducing vanilla app files

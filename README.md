@@ -1,70 +1,91 @@
 # Blog Editor
 
-A lightweight blog editor built as a static single-page application. Entries are stored in a Supabase Postgres database with row-level security, so each user can only access their own content.
+A lightweight React blog editor backed by Supabase for authentication and entry storage. The app uses hash-based routing so it can still be deployed as a static site, while protected editor routes keep creation and updates behind login.
 
 ## Tech Stack
 
-- **Frontend**: Vanilla HTML, CSS, JavaScript (no frameworks)
-- **Database**: Supabase (Postgres)
-- **Auth**: Supabase Auth (email/password)
-- **Hosting**: Static files — no build step required
+- **Frontend**: React 19, Vite 8, React Router, Tailwind CSS v4
+- **UI**: shadcn/ui on top of Base UI primitives
+- **Editor**: Tiptap with StarterKit
+- **Database/Auth**: Supabase Postgres + Supabase Auth
 
 ## Architecture
 
 ```
-index.html            HTML structure (auth screen, editor, entries list, entry view)
-styles.css            All application styles
-app.js                Routing, auth state management, CRUD operations, editor logic
-supabase-client.js    Initializes the Supabase JS client
-supabase/             Supabase project config and migrations
+index.html                     Vite entry HTML
+src/main.jsx                   React mount point with HashRouter + AuthProvider
+src/app.jsx                    Route tree with lazy-loaded pages
+src/components/layout.jsx      Shared shell with session bar and navigation
+src/components/protected-route.jsx
+                               Redirects unauthenticated users to /login
+src/components/tiptap-editor.jsx
+                               Rich text editor wrapper and toolbar
+src/pages/login-page.jsx       Login and sign-up flow
+src/pages/entries-page.jsx     Entries list with conditional edit actions
+src/pages/view-page.jsx        Read-only entry display
+src/pages/editor-page.jsx      Create and edit entry flow
+src/contexts/auth-context.jsx  Supabase auth state and auth helpers
+src/hooks/use-entries.js       Entries CRUD helpers
+src/lib/supabase.js            Supabase client initialization
+supabase/                      Existing project config and migrations
 ```
 
-### Routing
+## Routing
 
-Hash-based client-side routing with three routes:
+The app uses `HashRouter`, which keeps static hosting simple while still supporting direct navigation:
 
 | Route | Description |
 |-------|-------------|
-| `#/editor` | Rich text editor for creating new entries |
-| `#/editor/<id>` | Edit an existing entry |
-| `#/entries` | List of all entries with edit/view actions |
-| `#/view/<id>` | Read-only view of a single entry |
+| `#/login` | Email/password login or sign-up |
+| `#/entries` | Public entries list |
+| `#/view/:entryId` | Public read-only entry page |
+| `#/editor` | Protected page for creating a new entry |
+| `#/editor/:entryId` | Protected page for editing an existing entry |
 
-### Database Schema
+## Entry Behavior
 
-**`entries`** table:
+- Visitors can browse the entries list and open an entry view
+- Signed-in owners see edit actions for their own entries
+- Rich text content is stored as HTML and rendered directly on the view page
+- New entries and updates redirect back to the entries list after save
+
+## Database Schema
+
+The existing Supabase schema is unchanged. The key table is still `entries`:
 
 | Column | Type | Description |
 |--------|------|-------------|
 | `id` | uuid | Primary key (auto-generated) |
-| `user_id` | uuid | Foreign key to `auth.users` (auto-set via `auth.uid()`) |
+| `user_id` | uuid | Foreign key to `auth.users` |
 | `title` | text | Entry title |
-| `content` | text | Entry body (stored as HTML) |
-| `published_at` | date | Publication date (defaults to current date) |
+| `content` | text | Entry body stored as HTML |
+| `published_at` | date | Publication date |
 | `created_at` | timestamptz | Row creation timestamp |
-
-RLS policies restrict all operations (select, insert, update) to rows where `user_id` matches the authenticated user.
-
-### Authentication
-
-Email/password auth via Supabase Auth. The app shell is hidden behind an auth gate — unauthenticated users see only the login/signup form.
 
 ## Setup
 
-1. Create a [Supabase](https://supabase.com) project
-2. Update `supabase-client.js` with your project URL and anon key
-3. Run the database migration:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Confirm `src/lib/supabase.js` points at the correct Supabase project
+3. Apply database migrations if needed:
    ```bash
    npx supabase link --project-ref <your-project-ref>
    npx supabase db push
    ```
-4. Serve the files with any static server (e.g. `python3 -m http.server`)
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
 ## Development
 
-No build tools or dependencies to install. Edit the files directly and refresh the browser.
+- `npm run dev` starts the Vite development server
+- `npm run build` creates a production build in `dist/`
+- Route pages are lazy loaded so the editor bundle does not inflate the initial payload
 
-Database migrations live in `supabase/migrations/`. To create a new migration:
+When creating new database changes, keep using the migrations in `supabase/migrations/`:
 
 ```bash
 npx supabase migration new <migration_name>
