@@ -3,114 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Signal & Soil | A Thoughtful Blog Template</title>
-    <meta
-      name="description"
-      content="A clean, editorial-style blog template for essays, project notes, and thoughtful writing."
-    />
-    <link rel="stylesheet" href="./styles.css" />
-    <script src="./app.js" defer></script>
+    <title>Simple Text Area</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: #ffffff;
+        font-family: Arial, sans-serif;
+      }
+
+      main {
+        width: min(100%, 720px);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #111111;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 280px;
+        padding: 16px;
+        border: 1px solid #d0d0d0;
+        border-radius: 8px;
+        resize: vertical;
+        font: inherit;
+        color: #111111;
+        background: #ffffff;
+      }
+
+      textarea:focus {
+        outline: 2px solid #111111;
+        outline-offset: 2px;
+      }
+    </style>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="site-mark" href="./index.html">Signal & Soil</a>
-        <nav class="site-nav" aria-label="Primary navigation">
-          <a href="#latest-posts">Latest</a>
-          <a href="#topics">Topics</a>
-          <a href="#newsletter">Newsletter</a>
-        </nav>
-      </header>
-
-      <main>
-        <section class="hero">
-          <div class="hero-copy">
-            <p class="eyebrow">Editorial blog template</p>
-            <h1>Build a blog that feels like a journal, not a dashboard.</h1>
-            <p class="hero-text">
-              This starter is designed for essays, portfolio notes, case studies, and
-              slower writing. It gives you a strong visual direction without locking
-              you into a framework too early.
-            </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="#latest-posts">Browse posts</a>
-              <a class="button button-secondary" href="./posts/designing-for-clarity.html">
-                Read the featured article
-              </a>
-            </div>
-          </div>
-
-          <aside class="hero-panel" aria-label="Blog summary">
-            <div class="hero-stat">
-              <span class="hero-stat-value">12</span>
-              <span class="hero-stat-label">Long-form essays</span>
-            </div>
-            <div class="hero-stat">
-              <span class="hero-stat-value">4</span>
-              <span class="hero-stat-label">Project breakdowns</span>
-            </div>
-            <div class="hero-stat">
-              <span class="hero-stat-value">2x</span>
-              <span class="hero-stat-label">Monthly publishing cadence</span>
-            </div>
-          </aside>
-        </section>
-
-        <section class="featured-story" aria-labelledby="featured-post-title">
-          <div class="section-heading">
-            <p class="eyebrow">Featured post</p>
-            <h2 id="featured-post-title">One highlighted article with room to breathe</h2>
-          </div>
-          <article class="featured-card" data-featured-post></article>
-        </section>
-
-        <section class="topics" id="topics" aria-labelledby="topics-title">
-          <div class="section-heading">
-            <p class="eyebrow">Topics</p>
-            <h2 id="topics-title">A simple structure for recurring themes</h2>
-          </div>
-          <div class="topic-grid">
-            <article class="topic-card">
-              <h3>Writing</h3>
-              <p>Essays, personal notes, and reflections on process.</p>
-            </article>
-            <article class="topic-card">
-              <h3>Projects</h3>
-              <p>Case studies that explain what you built and why it mattered.</p>
-            </article>
-            <article class="topic-card">
-              <h3>Learning</h3>
-              <p>Lessons from experiments, mistakes, and systems that got better over time.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="post-feed" id="latest-posts" aria-labelledby="latest-posts-title">
-          <div class="section-heading">
-            <p class="eyebrow">Latest posts</p>
-            <h2 id="latest-posts-title">Recent writing and field notes</h2>
-          </div>
-          <div class="post-grid" data-post-grid></div>
-        </section>
-
-        <section class="newsletter-callout" id="newsletter" aria-labelledby="newsletter-title">
-          <div>
-            <p class="eyebrow">Keep in touch</p>
-            <h2 id="newsletter-title">Swap this block for a newsletter, contact form, or CTA.</h2>
-          </div>
-          <p>
-            The structure is already here: a strong headline, supporting copy, and a clear
-            action. You can wire this to ConvertKit, Buttondown, Substack, or a simple email link later.
-          </p>
-        </section>
-      </main>
-
-      <footer class="site-footer">
-        <p>Signal & Soil</p>
-        <p>Built as a clean starter for a portfolio blog.</p>
-        <p>&copy; <span data-current-year></span></p>
-      </footer>
-    </div>
+    <main>
+      <label for="text-input">Text Area</label>
+      <textarea
+        id="text-input"
+        name="text-input"
+        placeholder="Type here..."
+      ></textarea>
+    </main>
   </body>
 </html>
-
