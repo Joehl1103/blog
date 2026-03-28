@@ -2,4 +2,7 @@
 *.xlsx
 .env
 .worktrees/
+node_modules/
+dist/
+.old-vanilla/
 

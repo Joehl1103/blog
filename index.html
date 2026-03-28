@@ -3,97 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Text Editor</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Blog Editor</title>
   </head>
   <body>
-    <main>
-      <!-- Top bar: login/logout -->
-      <div class="user-bar" id="user-bar">
-        <span id="user-email"></span>
-        <button type="button" id="login-btn">Log in</button>
-        <button type="button" id="logout-btn" hidden>Log out</button>
-      </div>
-
-      <nav class="nav">
-        <a href="#/entries" data-route="entries">Entries</a>
-        <a href="#/editor" data-route="editor" id="nav-editor" hidden>Editor</a>
-      </nav>
-
-      <!-- Auth screen -->
-      <section class="view-panel auth-screen route" id="route-login" aria-label="Log in">
-        <div class="view-header">
-          <h1 class="view-title" id="auth-title">Log in</h1>
-        </div>
-        <!-- TODO: Remove before deploy — temporary dev credentials -->
-        <div style="margin: 16px 18px 0; padding: 12px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; font-size: 0.85rem; color: #555;">
-          <strong>Demo login:</strong><br />
-          Email: jkhloomis@icloud.com<br />
-          Password: ABCD1234
-        </div>
-        <form class="auth-form" id="auth-form">
-          <input type="email" id="auth-email" placeholder="Email" required />
-          <input type="password" id="auth-password" placeholder="Password" required minlength="6" />
-          <p class="auth-error" id="auth-error"></p>
-          <button type="submit" class="submit-btn" id="auth-submit">Log in</button>
-          <p class="auth-toggle">
-            <span id="auth-toggle-text">Don't have an account?</span>
-            <a id="auth-toggle-link">Sign up</a>
-          </p>
-        </form>
-      </section>
-
-      <!-- Editor route (auth required) -->
-      <section class="view-panel route" id="route-editor" aria-label="Editor">
-        <div class="view-header">
-          <h1 class="view-title">Editor</h1>
-        </div>
-        <input
-          type="text"
-          id="title-input"
-          class="title-input"
-          placeholder="Entry title..."
-          aria-label="Entry title"
-        />
-        <div class="format-toolbar" aria-label="Text formatting tools">
-          <button type="button" data-command="bold"><strong>B</strong></button>
-          <button type="button" data-command="italic"><em>I</em></button>
-          <button type="button" data-command="underline"><u>U</u></button>
-          <button type="button" data-command="formatBlock" data-value="h2">Heading</button>
-          <button type="button" data-command="formatBlock" data-value="p">Paragraph</button>
-          <button type="button" data-command="insertUnorderedList">Bullet List</button>
-        </div>
-        <div
-          id="editor"
-          class="editor"
-          contenteditable="true"
-          role="textbox"
-          aria-multiline="true"
-          data-placeholder="Type here and use the toolbar to style your text..."
-        ></div>
-        <div class="view-footer">
-          <button type="button" class="submit-btn" id="submit-entry">Publish</button>
-        </div>
-      </section>
-
-      <!-- Entries route (public) -->
-      <section class="view-panel route" id="route-entries" aria-label="Entries">
-        <div class="view-header">
-          <h1 class="view-title">Entries</h1>
-        </div>
-        <div id="entries-container"></div>
-      </section>
-
-      <!-- Single entry view route (public) -->
-      <section class="view-panel route" id="route-view" aria-label="View entry">
-        <div class="view-header">
-          <h1 class="view-title">View Entry</h1>
-        </div>
-        <div id="view-container"></div>
-      </section>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <script src="supabase-client.js"></script>
-    <script src="app.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
