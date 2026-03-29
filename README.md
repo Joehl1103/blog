@@ -51,7 +51,7 @@ The app uses `HashRouter`, which keeps static hosting simple while still support
 | **User** | Read entries; comment |
 | **Visitor** (unauthenticated) | Read entries |
 
-Roles are stored in the `user_roles` table. An `is_admin()` SQL function is used in RLS policies to restrict entry writes to admins.
+Admins are stored in the `user_roles` table. Regular authenticated users have no row there and are treated as non-admins. An `is_admin()` SQL function is used in RLS policies to restrict entry writes to admins.
 
 ## Entry Behavior
 
@@ -80,8 +80,10 @@ Roles are stored in the `user_roles` table. An `is_admin()` SQL function is used
 |--------|------|-------------|
 | `id` | uuid | Primary key (auto-generated) |
 | `user_id` | uuid | Foreign key to `auth.users` (unique) |
-| `role` | text | Either `'admin'` or `'user'` |
+| `role` | text | Always `'admin'` for rows in this table |
 | `created_at` | timestamptz | Row creation timestamp |
+
+This table uses a sparse model: admins get a `user_roles` row, while regular users are represented by the absence of a row.
 
 ## Setup
 

@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 
 /**
  * Query the user_roles table to check if the given user is an admin.
- * Returns true only when a row exists with role = 'admin'.
+ * In the sparse role model, only admins have a row in user_roles.
  * RLS ensures users can only read their own role.
  */
 const fetchIsAdmin = async (userId) => {
@@ -13,7 +13,7 @@ const fetchIsAdmin = async (userId) => {
     .from("user_roles")
     .select("role")
     .eq("user_id", userId)
-    .single();
+    .maybeSingle();
 
   return data?.role === "admin";
 };

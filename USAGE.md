@@ -10,7 +10,7 @@
 4. Check your email for a confirmation link
 5. After confirming, log in with your credentials
 
-New accounts are created with the **user** role by default. Only the site owner has the **admin** role.
+New accounts start as regular users by default. Only the site owner has admin access.
 
 ### Log In / Log Out
 

@@ -2,8 +2,9 @@
 *.xlsx
 .env
 .worktrees/
+input/
+output/
 node_modules/
 dist/
 .old-vanilla/
 .docs/
-
