@@ -1,6 +1,6 @@
 # Blog Editor
 
-A lightweight React blog editor backed by Supabase for authentication and entry storage. The app uses hash-based routing so it can still be deployed as a static site, while protected editor routes keep creation and updates behind login.
+A lightweight React blog editor backed by Supabase for authentication and entry storage. The app uses hash-based routing so it can still be deployed as a static site. Role-based access control separates admin capabilities (create, edit, delete entries and manage profile) from regular user capabilities (read entries and comment).
 
 ## Tech Stack
 
@@ -17,7 +17,7 @@ src/main.jsx                   React mount point with HashRouter + AuthProvider
 src/app.jsx                    Route tree with lazy-loaded pages
 src/components/layout.jsx      Shared shell with session bar and navigation
 src/components/protected-route.jsx
-                               Redirects unauthenticated users to /login
+                               ProtectedRoute (auth gate) and AdminRoute (admin gate)
 src/components/tiptap-editor.jsx
                                Rich text editor wrapper and toolbar
 src/pages/login-page.jsx       Login and sign-up flow
@@ -39,19 +39,31 @@ The app uses `HashRouter`, which keeps static hosting simple while still support
 | `#/login` | Email/password login or sign-up |
 | `#/entries` | Public entries list |
 | `#/view/:entryId` | Public read-only entry page |
-| `#/editor` | Protected page for creating a new entry |
-| `#/editor/:entryId` | Protected page for editing an existing entry |
+| `#/editor` | Admin-only page for creating a new entry |
+| `#/editor/:entryId` | Admin-only page for editing an existing entry |
+| `#/profile` | Admin-only profile management page |
+
+## Roles
+
+| Role | Capabilities |
+|------|-------------|
+| **Admin** | Create, edit, delete entries; manage profile; comment |
+| **User** | Read entries; comment |
+| **Visitor** (unauthenticated) | Read entries |
+
+Roles are stored in the `user_roles` table. An `is_admin()` SQL function is used in RLS policies to restrict entry writes to admins.
 
 ## Entry Behavior
 
 - Visitors can browse the entries list and open an entry view
-- Signed-in owners see edit actions for their own entries
+- Admin users see edit/delete actions on entries and can create new ones
+- Regular users can read entries and comment, but cannot create or modify entries
 - Rich text content is stored as HTML and rendered directly on the view page
 - New entries and updates redirect back to the entries list after save
 
 ## Database Schema
 
-The existing Supabase schema is unchanged. The key table is still `entries`:
+### entries
 
 | Column | Type | Description |
 |--------|------|-------------|
@@ -60,6 +72,15 @@ The existing Supabase schema is unchanged. The key table is still `entries`:
 | `title` | text | Entry title |
 | `content` | text | Entry body stored as HTML |
 | `published_at` | date | Publication date |
+| `created_at` | timestamptz | Row creation timestamp |
+
+### user_roles
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | uuid | Primary key (auto-generated) |
+| `user_id` | uuid | Foreign key to `auth.users` (unique) |
+| `role` | text | Either `'admin'` or `'user'` |
 | `created_at` | timestamptz | Row creation timestamp |
 
 ## Setup

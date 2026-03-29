@@ -2,18 +2,18 @@
 
 ## Project Overview
 
-A Vite + React single-page blog editor backed by Supabase for auth and data storage. The app uses hash-based routing so it can still be deployed statically while keeping the editor behind authenticated routes.
+A Vite + React single-page blog editor backed by Supabase for auth and data storage. The app uses hash-based routing so it can still be deployed statically. Role-based access (admin vs user) controls who can create, edit, and delete entries — regular users can only read and comment.
 
 ## Key Files
 
 - `src/main.jsx` — React mount point with `HashRouter` and `AuthProvider`
 - `src/app.jsx` — Route tree with lazy-loaded pages
 - `src/components/layout.jsx` — Shared shell and navigation
-- `src/components/protected-route.jsx` — Auth gate for editor routes
+- `src/components/protected-route.jsx` — ProtectedRoute (auth gate) and AdminRoute (admin gate)
 - `src/components/tiptap-editor.jsx` — Tiptap editor wrapper
 - `src/pages/` — Login, entries, view, and editor pages
 - `src/contexts/auth-context.jsx` — Supabase auth state and auth actions
-- `src/hooks/use-entries.js` — Entry fetch/create/update logic
+- `src/hooks/use-entries.js` — Entry fetch/create/update/delete logic
 - `src/lib/supabase.js` — Supabase client init
 - `supabase/migrations/` — Database schema migrations
 
@@ -48,9 +48,11 @@ After making any code change, check whether README.md and/or USAGE.md need updat
 
 - Project URL: `https://zmplxklzsjkuipttflnd.supabase.co`
 - Migrations are managed via the Supabase CLI (`npx supabase migration new`, `npx supabase db push`)
-- RLS is enabled — all table policies restrict access to the authenticated user's own rows
+- RLS is enabled — entry writes restricted to admin role via `is_admin()` function; comments restricted to own rows
+- Roles are stored in `user_roles` table — manage via Supabase dashboard SQL editor
 
 ## Projects and Tasks
 
 - React migration to Vite/React/shadcn/ui/Tiptap completed on 2026-03-27
+- Admin vs user role-based access implemented on 2026-03-29 (issue #1)
 - Keep future work aligned with the React architecture and avoid reintroducing vanilla app files
