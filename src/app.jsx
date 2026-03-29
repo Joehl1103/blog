@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout";
-import { ProtectedRoute } from "@/components/protected-route";
+import { AdminRoute } from "@/components/protected-route";
 
 const EditorPage = lazy(() =>
   import("@/pages/editor-page").then((module) => ({
@@ -49,7 +49,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/entries" element={<EntriesPage />} />
           <Route path="/view/:entryId" element={<ViewPage />} />
-          <Route element={<ProtectedRoute />}>
+          <Route element={<AdminRoute />}>
             <Route path="/editor" element={<EditorPage />} />
             <Route path="/editor/:entryId" element={<EditorPage />} />
             <Route path="/profile" element={<ProfilePage />} />

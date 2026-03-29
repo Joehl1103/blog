@@ -4,7 +4,7 @@ import { ArrowRight, PencilLine, RefreshCw } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/auth-context";
-import { useEntries } from "@/hooks/use-entries";
+import { useEntries, deleteEntry } from "@/hooks/use-entries";
 import { cn } from "@/lib/utils";
 
 const formatPublishedDate = (publishedAt) => {
@@ -20,7 +20,7 @@ const formatPublishedDate = (publishedAt) => {
 };
 
 export function EntriesPage() {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const { entries, loading, error, fetchEntries } = useEntries();
 
   useEffect(() => {
@@ -35,8 +35,8 @@ export function EntriesPage() {
             Latest entries
           </CardTitle>
           <CardDescription className="max-w-2xl text-sm leading-6">
-            Browse everything in the blog. Signed-in owners can jump directly
-            into editing from here.
+            Browse everything in the blog. Admins can edit and manage entries
+            from here.
           </CardDescription>
         </div>
 
@@ -51,19 +51,12 @@ export function EntriesPage() {
             Refresh
           </Button>
 
-          {user ? (
+          {isAdmin ? (
             <Link className={cn(buttonVariants())} to="/editor">
               <PencilLine className="mr-2 size-4" />
               New entry
             </Link>
-          ) : (
-            <Link
-              className={cn(buttonVariants({ variant: "secondary" }))}
-              to="/login"
-            >
-              Log in to write
-            </Link>
-          )}
+          ) : null}
         </div>
       </CardHeader>
 
@@ -88,44 +81,53 @@ export function EntriesPage() {
 
         {!loading && !error && entries.length > 0 ? (
           <div className="space-y-3">
-            {entries.map((entry) => {
-              const isOwner = user?.id === entry.user_id;
+            {entries.map((entry) => (
+              <article
+                className="flex flex-col gap-4 border border-border/70 bg-muted/30 p-5 transition-transform hover:-translate-y-0.5 hover:bg-muted/45 sm:flex-row sm:items-center sm:justify-between"
+                key={entry.id}
+              >
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    {formatPublishedDate(entry.published_at)}
+                  </p>
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {entry.title || "Untitled"}
+                  </h3>
+                </div>
 
-              return (
-                <article
-                  className="flex flex-col gap-4 border border-border/70 bg-muted/30 p-5 transition-transform hover:-translate-y-0.5 hover:bg-muted/45 sm:flex-row sm:items-center sm:justify-between"
-                  key={entry.id}
-                >
-                  <div className="space-y-2">
-                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                      {formatPublishedDate(entry.published_at)}
-                    </p>
-                    <h3 className="text-lg font-semibold text-foreground">
-                      {entry.title || "Untitled"}
-                    </h3>
-                  </div>
-
-                  <div className="flex flex-wrap gap-3">
-                    {isOwner ? (
+                <div className="flex flex-wrap gap-3">
+                  {isAdmin ? (
+                    <>
                       <Link
                         className={cn(buttonVariants({ variant: "outline" }))}
                         to={`/editor/${entry.id}`}
                       >
                         Edit
                       </Link>
-                    ) : null}
+                      <Button
+                        onClick={async () => {
+                          const { error } = await deleteEntry(entry.id);
+                          if (!error) {
+                            void fetchEntries();
+                          }
+                        }}
+                        variant="outline"
+                      >
+                        Delete
+                      </Button>
+                    </>
+                  ) : null}
 
-                    <Link
-                      className={cn(buttonVariants())}
-                      to={`/view/${entry.id}`}
-                    >
-                      View entry
-                      <ArrowRight className="ml-2 size-4" />
-                    </Link>
-                  </div>
-                </article>
-              );
-            })}
+                  <Link
+                    className={cn(buttonVariants())}
+                    to={`/view/${entry.id}`}
+                  >
+                    View entry
+                    <ArrowRight className="ml-2 size-4" />
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         ) : null}
       </CardContent>

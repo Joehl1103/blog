@@ -14,7 +14,7 @@ const navLinkClassName = ({ isActive }) =>
 
 export function Layout() {
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
 
   const handleLogout = async () => {
     await signOut();
@@ -78,7 +78,7 @@ export function Layout() {
                 Entries
               </NavLink>
 
-              {user ? (
+              {isAdmin ? (
                 <>
                   <NavLink className={navLinkClassName} to="/editor">
                     <PenSquare className="mr-2 size-4" />

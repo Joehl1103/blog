@@ -57,3 +57,13 @@ export async function updateEntry(id, { title, content }) {
 
   return { error };
 }
+
+/* Delete an entry by ID (admin-only — enforced by RLS) */
+export async function deleteEntry(id) {
+  const { error } = await supabase
+    .from("entries")
+    .delete()
+    .eq("id", id);
+
+  return { error };
+}
